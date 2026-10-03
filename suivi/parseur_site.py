@@ -81,6 +81,7 @@ def analyser(page: str) -> ResultatSite:
     titre_en_attente = ""
     numero_ligne = 0
     ordre = 0
+    sections = []  # (position dans la page, titre de section) : sert aux documents intégrés
 
     for bloc in re.finditer(r"<h([1-6])\b[^>]*>(.*?)</h\1>|<p\b[^>]*>(.*?)</p>", zone, OPTIONS):
         # --- Un titre <hN> ---
@@ -90,6 +91,7 @@ def analyser(page: str) -> ResultatSite:
                 resultat.titre_page = resultat.titre_page or texte
             else:
                 section = texte
+                sections.append((bloc.start(), section))
             titre_en_attente = ""
             continue
 
@@ -132,6 +134,25 @@ def analyser(page: str) -> ResultatSite:
                 ordre += 1
                 resultat.liens.append(LienSite(section=section, titre=titre, libelle=libelle,
                                                url=url, ligne=numero_ligne, ordre=ordre))
+
+    # --- Documents Google intégrés (tableur, document…) : ils ne sont pas dans un <p>.
+    # Leur lien porte un titre du genre "Open Spreadsheet, Cahier de texte 2026-2027 in new window".
+    deja_vus = {lien.url for lien in resultat.liens}
+    for m_lien in re.finditer(r"<a\b([^>]*)>", zone, OPTIONS):
+        nom = re.match(r"^\s*(?:Open|Ouvrir)\s+[^,]+,\s*(.+?)\s+(?:in new window|dans une nouvelle fenêtre)\s*$",
+                       attribut(m_lien.group(1), "title"), OPTIONS)
+        url = url_reelle(attribut(m_lien.group(1), "href"))
+        if not nom or not url or url in deja_vus:
+            continue
+        deja_vus.add(url)
+        section_integree = ""
+        for position, titre_section in sections:
+            if position < m_lien.start():
+                section_integree = titre_section
+        numero_ligne += 1
+        ordre += 1
+        resultat.liens.append(LienSite(section=section_integree, titre=nom.group(1), libelle=nom.group(1),
+                                       url=url, ligne=numero_ligne, ordre=ordre))
 
     if not resultat.liens:
         resultat.erreur = "aucun document trouvé sur la page"
