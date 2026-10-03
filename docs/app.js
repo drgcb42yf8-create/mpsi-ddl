@@ -339,7 +339,7 @@ function listeCours(filtre) {
   const parMatiere = grouper(docs, (r) => r.matiere);
   for (const matiere of trierMatieres(parMatiere.keys())) {
     const carte = el('section', { class: 'carte' }, titreMatiere(matiere, 'h3'));
-    for (const ligne of grouper(parMatiere.get(matiere), (r) => `${r.page}|${r.annee}|${r.titre}`).values()) {
+    for (const ligne of grouper(parMatiere.get(matiere), (r) => `${r.page}|${r.annee}|${r.section}|${r.titre}`).values()) {
       const seul = ligne.length === 1 && ligne[0].titre === ligne[0].libelle;
       carte.append(el('div', { class: 'groupe-ligne' },
         el('div', { class: 'titre' }, seul ? ligne[0].section || matiere : ligne[0].titre,
