@@ -196,6 +196,20 @@ class TestSite(unittest.TestCase):
         tp1 = trouver(ressources, titre="TP1 - Introduction à Python", libelle="énoncé")
         self.assertEqual((tp1["categorie"], tp1["annee"]), (TP, "2026-2027"))
 
+    def test_document_integre(self):
+        # Copie simplifiée de la page « Cahier de texte » : un tableur intégré, sans <p>.
+        page = ('<div role="main"><h1>Mathématiques</h1><h2><span>Cahier de texte</span></h2>'
+                '<div><a class="oWHwWc" target="_blank" title="Open Spreadsheet, Cahier de texte 2026-2027 in new window" '
+                'href="https://drive.google.com/open?id=15ZIl4yGld8lgyIdIOY1NxzAw0pPTC6RhDoi52uUx3ks"></a>'
+                '<iframe src="x"></iframe></div></div>')
+        resultat = analyser_site(page)
+        self.assertTrue(resultat.ok, resultat.erreur)
+        self.assertEqual(len(resultat.liens), 1)
+        lien = resultat.liens[0]
+        self.assertEqual((lien.section, lien.libelle), ("Cahier de texte", "Cahier de texte 2026-2027"))
+        ressources = classer("mathématiques/cahier-de-texte", "Mathématiques", resultat.liens, AUJOURDHUI)
+        self.assertEqual(ressources[0]["annee"], "2026-2027")
+
     def test_page_cassee(self):
         self.assertFalse(analyser_site("<html><body>Rien</body></html>").ok)
         resultat = analyser_site('<div role="main"><h1>Maths</h1><p>Bientôt</p></div>')
