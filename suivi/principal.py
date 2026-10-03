@@ -308,8 +308,14 @@ def main() -> int:
     else:
         print("Site de la classe : pas encore l'heure de le revérifier.")
 
-    # Notes +PLUS (après un refus, on attend 24 h, sauf relance à la main)
-    if not manuel and not est_du(etat, "refus_identifiants_le", ATTENTE_APRES_REFUS):
+    # Notes +PLUS (après un refus, on attend 24 h, sauf relance à la main).
+    # Sans les secrets, on ne contacte pas +PLUS : le créneau de 30 min n'est donc pas utilisé.
+    secrets_presents = all(os.environ.get(nom) for nom in ("PLUS_IDENTIFIANT", "PLUS_MOT_DE_PASSE", "PHRASE_SECRETE"))
+    if not secrets_presents:
+        problemes["notes"] = ("Notes non récupérées : il manque un des secrets GitHub "
+                              "PLUS_IDENTIFIANT, PLUS_MOT_DE_PASSE ou PHRASE_SECRETE.")
+        print("Notes : secrets manquants.")
+    elif not manuel and not est_du(etat, "refus_identifiants_le", ATTENTE_APRES_REFUS):
         print("Notes : identifiants refusés récemment, on attend une relance manuelle.")
     elif est_du(etat, "derniere_verif_notes", INTERVALLE_NOTES):
         etat["derniere_verif_notes"] = maintenant  # même en cas d'échec : on n'insiste pas
