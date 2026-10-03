@@ -1,0 +1,230 @@
+/* ---------------------------------------------------------------------------
+   Couleurs : définies une seule fois ici (clair), puis redéfinies pour le mode
+   sombre. Les couleurs des matières viennent d'une palette testée pour les
+   daltoniens (ordre fixe : maths, physique, anglais, info…).
+   --------------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+  --fond-page: #f9f9f7;
+  --surface: #fcfcfb;
+  --surface-2: #f0efec;
+  --encre: #0b0b0b;
+  --encre-2: #52514e;
+  --encre-discrete: #898781;
+  --trait: rgba(11, 11, 11, 0.10);
+  --grille: #e1e0d9;
+  --axe: #c3c2b7;
+  --accent: #2a78d6;
+  --accent-texte: #1c5cab;
+  --sur-accent: #ffffff;
+  --alerte-fond: #fff4ce;
+  --alerte-encre: #5c4400;
+  --alerte-trait: #e0c46c;
+  --nouveau: #006300;
+  --matiere-1: #2a78d6; /* Mathématiques */
+  --matiere-2: #eb6834; /* Physique-Chimie */
+  --matiere-3: #1baf7a; /* Anglais */
+  --matiere-4: #eda100; /* Informatique */
+  --matiere-5: #e87ba4;
+  --matiere-6: #008300;
+  --matiere-7: #4a3aa7;
+  --matiere-8: #e34948;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --fond-page: #0d0d0d;
+    --surface: #1a1a19;
+    --surface-2: #262624;
+    --encre: #ffffff;
+    --encre-2: #c3c2b7;
+    --encre-discrete: #898781;
+    --trait: rgba(255, 255, 255, 0.10);
+    --grille: #2c2c2a;
+    --axe: #383835;
+    --accent: #3987e5;
+    --accent-texte: #86b6ef;
+    --alerte-fond: #3a3115;
+    --alerte-encre: #f3dc9a;
+    --alerte-trait: #6b5a22;
+    --nouveau: #0ca30c;
+    --matiere-1: #3987e5;
+    --matiere-2: #d95926;
+    --matiere-3: #199e70;
+    --matiere-4: #c98500;
+    --matiere-5: #d55181;
+    --matiere-6: #008300;
+    --matiere-7: #9085e9;
+    --matiere-8: #e66767;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --fond-page: #0d0d0d; --surface: #1a1a19; --surface-2: #262624;
+  --encre: #ffffff; --encre-2: #c3c2b7; --encre-discrete: #898781;
+  --trait: rgba(255, 255, 255, 0.10); --grille: #2c2c2a; --axe: #383835;
+  --accent: #3987e5; --accent-texte: #86b6ef;
+  --alerte-fond: #3a3115; --alerte-encre: #f3dc9a; --alerte-trait: #6b5a22; --nouveau: #0ca30c;
+  --matiere-1: #3987e5; --matiere-2: #d95926; --matiere-3: #199e70; --matiere-4: #c98500;
+  --matiere-5: #d55181; --matiere-6: #008300; --matiere-7: #9085e9; --matiere-8: #e66767;
+}
+
+/* --------------------------------------------------------------------------- base */
+* { box-sizing: border-box; }
+[hidden] { display: none !important; } /* sinon un "display: flex" l'emporterait */
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--fond-page);
+  color: var(--encre);
+  font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  padding-bottom: calc(68px + env(safe-area-inset-bottom));
+}
+a { color: var(--accent-texte); }
+h1, h2, h3 { line-height: 1.2; margin: 0; }
+h2 { font-size: 1.25rem; margin: 20px 0 10px; }
+h3 { font-size: 1rem; margin: 14px 0 8px; }
+.discret { color: var(--encre-2); font-size: 0.85rem; margin: 2px 0 0; }
+button, input, select { font: inherit; color: inherit; }
+
+/* --------------------------------------------------------------------------- en-tête */
+.entete {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: calc(10px + env(safe-area-inset-top)) 16px 10px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--trait);
+}
+.entete h1 { font-size: 1.15rem; }
+.entete-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.bouton-discret {
+  display: inline-flex; align-items: center; min-height: 36px; padding: 0 12px;
+  border: 1px solid var(--trait); border-radius: 18px;
+  background: var(--surface-2); color: var(--encre); text-decoration: none; font-size: 0.9rem;
+}
+
+/* --------------------------------------------------------------------------- contenu */
+main { max-width: 760px; margin: 0 auto; padding: 4px 16px 24px; outline: none; }
+.bandeau {
+  max-width: 760px; margin: 12px auto 0; padding: 10px 14px;
+  background: var(--alerte-fond); color: var(--alerte-encre);
+  border: 1px solid var(--alerte-trait); border-radius: 10px; font-size: 0.92rem;
+}
+.bandeau p { margin: 4px 0; }
+.carte {
+  background: var(--surface); border: 1px solid var(--trait); border-radius: 12px;
+  padding: 12px 14px; margin: 10px 0;
+}
+.vide { color: var(--encre-2); font-style: italic; }
+
+.pastille {
+  display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+  margin-right: 8px; vertical-align: 0;
+}
+.titre-matiere { display: flex; align-items: center; font-weight: 650; }
+
+/* Liens vers les documents : de vrais boutons, faciles à toucher (44 px). */
+.liste-docs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.doc {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 14px;
+  border-radius: 20px; border: 1px solid var(--trait);
+  background: var(--surface-2); color: var(--encre); text-decoration: none; font-size: 0.93rem;
+}
+.doc.principal { background: var(--accent); color: var(--sur-accent); border-color: transparent; }
+.doc.retire { opacity: 0.55; text-decoration: line-through; }
+.etiquette {
+  display: inline-block; font-size: 0.72rem; font-weight: 650; letter-spacing: 0.02em;
+  padding: 1px 7px; border-radius: 9px; margin-left: 8px; vertical-align: 2px;
+  border: 1px solid currentColor;
+}
+.etiquette.nouveau { color: var(--nouveau); }
+.etiquette.en-cours { color: var(--accent-texte); }
+
+.groupe-ligne { padding: 10px 0; border-top: 1px solid var(--trait); }
+.groupe-ligne:first-of-type { border-top: none; }
+.groupe-ligne .titre { font-weight: 600; }
+.groupe-ligne .sous-titre { color: var(--encre-2); font-size: 0.85rem; }
+
+/* --------------------------------------------------------------------------- filtres */
+.filtres { display: flex; flex-direction: column; gap: 10px; margin: 12px 0; }
+.puces { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+.puces::-webkit-scrollbar { display: none; }
+.puce {
+  flex-shrink: 0; min-height: 36px; padding: 0 14px; border-radius: 18px;
+  border: 1px solid var(--trait); background: var(--surface); cursor: pointer;
+}
+.puce[aria-pressed="true"] { background: var(--encre); color: var(--fond-page); border-color: var(--encre); }
+.recherche {
+  width: 100%; min-height: 44px; padding: 0 14px; border-radius: 12px;
+  border: 1px solid var(--trait); background: var(--surface);
+}
+.case { display: flex; align-items: center; gap: 8px; font-size: 0.92rem; color: var(--encre-2); }
+.case input { width: 20px; height: 20px; }
+
+details.repli > summary {
+  cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center;
+  min-height: 44px; font-weight: 650;
+}
+details.repli > summary::-webkit-details-marker { display: none; }
+details.repli > summary::after { content: "▾"; color: var(--encre-discrete); transition: transform 0.15s; }
+details.repli:not([open]) > summary::after { transform: rotate(-90deg); }
+
+/* --------------------------------------------------------------------------- notes */
+.verrou { text-align: center; padding: 24px 16px; }
+.verrou form { display: flex; flex-direction: column; gap: 12px; max-width: 360px; margin: 16px auto 0; }
+.bouton {
+  min-height: 44px; border: none; border-radius: 12px; padding: 0 18px;
+  background: var(--accent); color: var(--sur-accent); font-weight: 650; cursor: pointer;
+}
+.bouton.secondaire { background: var(--surface-2); color: var(--encre); border: 1px solid var(--trait); }
+.erreur { color: #d03b3b; font-weight: 600; }
+
+.moyennes { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.moyenne .valeur { font-size: 1.8rem; font-weight: 700; line-height: 1.1; margin-top: 6px; }
+.moyenne .comparaison { color: var(--encre-2); font-size: 0.85rem; }
+
+.note-ligne { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 10px 0; border-top: 1px solid var(--trait); }
+.note-ligne:first-of-type { border-top: none; }
+.note-valeur { font-size: 1.35rem; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+.note-details { color: var(--encre-2); font-size: 0.85rem; grid-column: 1 / -1; }
+.note-ligne details { grid-column: 1 / -1; font-size: 0.92rem; }
+.note-ligne details summary { cursor: pointer; color: var(--accent-texte); min-height: 32px; display: flex; align-items: center; }
+
+/* Graphiques */
+.graphique { width: 100%; height: auto; display: block; overflow: visible; }
+.graphique .grille { stroke: var(--grille); stroke-width: 1; }
+.graphique .axe { stroke: var(--axe); stroke-width: 1; }
+.graphique .graduation { fill: var(--encre-discrete); font-size: 11px; font-variant-numeric: tabular-nums; }
+.graphique .etiquette-point { fill: var(--encre); font-size: 12px; font-weight: 650; }
+.moyenne-classe { stroke: var(--encre-discrete); stroke-width: 1.5; stroke-dasharray: 5 4; fill: none; }
+.graphique .zone-touche { fill: transparent; cursor: pointer; }
+.legende { display: flex; gap: 16px; flex-wrap: wrap; color: var(--encre-2); font-size: 0.85rem; margin: 4px 0 2px; }
+.legende span { display: inline-flex; align-items: center; gap: 6px; }
+.legende svg { width: 22px; height: 10px; }
+.infobulle {
+  position: fixed; z-index: 20; pointer-events: none;
+  background: var(--encre); color: var(--fond-page);
+  padding: 6px 10px; border-radius: 8px; font-size: 0.85rem; line-height: 1.3;
+  transform: translate(-50%, calc(-100% - 10px)); white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------- barre d'onglets */
+.onglets {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  background: var(--surface); border-top: 1px solid var(--trait);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.onglets a {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 58px; color: var(--encre-2); text-decoration: none; font-size: 0.75rem; gap: 2px;
+}
+.onglets .pictogramme { font-size: 1.2rem; line-height: 1; }
+.onglets a[aria-current="page"] { color: var(--accent-texte); font-weight: 650; }
+
+@media (min-width: 760px) {
+  .onglets { max-width: 760px; margin: 0 auto; border: 1px solid var(--trait); border-bottom: none; border-radius: 14px 14px 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

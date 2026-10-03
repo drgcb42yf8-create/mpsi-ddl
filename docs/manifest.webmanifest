@@ -1,0 +1,16 @@
+{
+  "name": "MPSI Dupuy de Lôme",
+  "short_name": "MPSI DDL",
+  "description": "Notes de khôlle, programmes de colle, cours et annales.",
+  "lang": "fr",
+  "start_url": "./#semaine",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f9f9f7",
+  "theme_color": "#2a78d6",
+  "icons": [
+    { "src": "icone-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icone-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icone.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

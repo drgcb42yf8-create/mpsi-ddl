@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>MPSI DDL</title>
+  <meta name="description" content="Notes de khôlle, programmes de colle, cours et annales de la MPSI Dupuy de Lôme.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icone.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icone-180.png">
+  <meta name="theme-color" content="#2a78d6">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="MPSI DDL">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="entete">
+    <div>
+      <h1>MPSI DDL</h1>
+      <p id="derniere-verif" class="discret">Chargement…</p>
+    </div>
+    <div class="entete-actions">
+      <a id="lien-actualiser" class="bouton-discret" href="#" target="_blank" rel="noopener" hidden>Actualiser</a>
+      <a class="bouton-discret" href="https://cpgedupuydelome.prepas-plus.fr" target="_blank" rel="noopener">+PLUS</a>
+    </div>
+  </header>
+
+  <div id="problemes" class="bandeau" role="alert" hidden></div>
+
+  <main id="contenu" tabindex="-1"></main>
+
+  <nav class="onglets" aria-label="Sections">
+    <a href="#semaine" data-vue="semaine"><span class="pictogramme" aria-hidden="true">◷</span>Semaine</a>
+    <a href="#notes" data-vue="notes"><span class="pictogramme" aria-hidden="true">✎</span>Notes</a>
+    <a href="#colles" data-vue="colles"><span class="pictogramme" aria-hidden="true">☰</span>Colles</a>
+    <a href="#cours" data-vue="cours"><span class="pictogramme" aria-hidden="true">❏</span>Cours</a>
+    <a href="#annales" data-vue="annales"><span class="pictogramme" aria-hidden="true">✓</span>Annales</a>
+  </nav>
+
+  <div id="infobulle" class="infobulle" hidden></div>
+  <script src="app.js"></script>
+</body>
+</html>
